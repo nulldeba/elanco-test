@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Card } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -23,23 +24,30 @@ interface cloudData {
 const App = () => {
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [rowData, setRowData] = useState<any[]>([]);
+  const [isServiceTable, setIsServiceTable] = useState(true);
 
-  useEffect(() => {
-    // fetch("https://engineering-task.elancoapps.com/api/resources")
-    //   .then((result) => result.json())
-    //   .then((data) => console.log(data));
-  }, []);
-
+ 
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
         <Box sx={{}}>
           <div className="App">
-          
             <ServiceFilter setRowData={setRowData} />
-            <ServiceTable rowData={rowData} setSelectedRow={setSelectedRow} />
-            <ServiceDetails selectedRow={selectedRow} />
+            <Card style={{ padding: "20px" }} variant="outlined">
+              {isServiceTable ? (
+                <ServiceTable
+                  rowData={rowData}
+                  setSelectedRow={setSelectedRow}
+                  setIsServiceTable={setIsServiceTable}
+                />
+              ) : (
+                <ServiceDetails
+                  selectedRow={selectedRow}
+                  setIsServiceTable={setIsServiceTable}
+                />
+              )}
+            </Card>
           </div>
         </Box>
       </Container>

@@ -6,7 +6,7 @@ import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
-const ServiceTable = ({ rowData, setSelectedRow }: any) => {
+const ServiceTable = ({ rowData, setSelectedRow, setIsServiceTable }: any) => {
   const [columnDefs] = useState<ColDef[]>([
     {
       field: "Date",
@@ -14,20 +14,34 @@ const ServiceTable = ({ rowData, setSelectedRow }: any) => {
       filter: true,
       cellStyle: { textAlign: "left" },
     },
-    { field: "Cost", sortable: true, filter: true },
-    { field: "ServiceName", sortable: true, filter: true },
+    {
+      field: "Cost",
+      sortable: true,
+      filter: true,
+      cellStyle: { textAlign: "left" },
+    },
+    {
+      field: "ServiceName",
+      sortable: true,
+      filter: true,
+      cellStyle: { textAlign: "left" },
+    },
     {
       field: "Tags.app-name",
       headerName: "Applications",
       sortable: true,
       filter: true,
+      cellStyle: { textAlign: "left" },
     },
     {
       field: "",
       headerName: "View",
       cellRenderer: ({ data }: any) => {
         return (
-          <Button variant="text" onClick={() => setSelectedRow(data)}>
+            <Button variant="text" onClick={() => {
+                setSelectedRow(data)
+                setIsServiceTable(false)
+            }}>
             View
           </Button>
         );
@@ -50,7 +64,7 @@ const ServiceTable = ({ rowData, setSelectedRow }: any) => {
     color: theme.palette.text.secondary,
   }));
   return (
-    <Card style={{ padding: "20px" }} variant="outlined">
+    <>
       <Grid>
         <Typography gutterBottom variant="h5" component="div">
           Services Details
@@ -77,7 +91,7 @@ const ServiceTable = ({ rowData, setSelectedRow }: any) => {
           </Item>
         </Grid>
       </Grid>
-    </Card>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
-import { Card, Grid, Typography, styled, Paper } from "@mui/material";
+import { Button, Grid, Typography, styled, Paper } from "@mui/material";
 
-const ServiceDetails = ({ selectedRow }: any) => {
+const ServiceDetails = ({ selectedRow, setIsServiceTable }: any) => {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -11,9 +11,19 @@ const ServiceDetails = ({ selectedRow }: any) => {
   }));
 
   return (
-    <Card style={{ padding: "20px" }} variant="outlined">
+    <>
       {Object.keys(selectedRow).length > 0 ? (
         <Grid container>
+          <Grid item xs={12}>
+            <Button
+              variant="text"
+              onClick={() => {
+                setIsServiceTable(true);
+              }}
+            >
+              Back to Services table
+            </Button>
+          </Grid>
           <Grid item xs={12}>
             <Typography gutterBottom variant="h5" component="div">
               Details of the services on date: {selectedRow.Date}
@@ -203,8 +213,7 @@ const ServiceDetails = ({ selectedRow }: any) => {
       ) : (
         ""
       )}
-      
-    </Card>
+    </>
   );
 };
 
