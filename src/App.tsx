@@ -23,7 +23,7 @@ interface cloudData {
 
 const App = () => {
   const [selectedRow, setSelectedRow] = useState<any>({});
-  const [rowData, setRowData] = useState<any[]>([]);
+  const [rowData, setRowData] = useState<cloudData[]>([]);
   const [isServiceTable, setIsServiceTable] = useState(true);
 
  

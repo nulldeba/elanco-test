@@ -1,7 +1,7 @@
-import React, { useMemo, useState } from "react";
-import { Card, Grid, Typography, styled, Paper, Button } from "@mui/material";
+import React, { useEffect, useMemo, useState } from "react";
+import { Grid, Typography, styled, Paper, Button } from "@mui/material";
 import { AgGridReact } from "ag-grid-react";
-import { ColDef, ColGroupDef, GridOptions } from "ag-grid-community";
+import { ColDef } from "ag-grid-community";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -38,10 +38,13 @@ const ServiceTable = ({ rowData, setSelectedRow, setIsServiceTable }: any) => {
       headerName: "View",
       cellRenderer: ({ data }: any) => {
         return (
-            <Button variant="text" onClick={() => {
-                setSelectedRow(data)
-                setIsServiceTable(false)
-            }}>
+          <Button
+            variant="text"
+            onClick={() => {
+              setSelectedRow(data);
+              setIsServiceTable(false);
+            }}
+          >
             View
           </Button>
         );
@@ -63,6 +66,26 @@ const ServiceTable = ({ rowData, setSelectedRow, setIsServiceTable }: any) => {
     textAlign: "center",
     color: theme.palette.text.secondary,
   }));
+
+  useEffect(() => {
+    // This is added for some ag-grid defect
+    window.addEventListener("error", (e) => {
+      if (e.message === "ResizeObserver loop limit exceeded") {
+        const resizeObserverErrDiv = document.getElementById(
+          "webpack-dev-server-client-overlay-div"
+        );
+        const resizeObserverErr = document.getElementById(
+          "webpack-dev-server-client-overlay"
+        );
+        if (resizeObserverErr) {
+          resizeObserverErr.setAttribute("style", "display: none");
+        }
+        if (resizeObserverErrDiv) {
+          resizeObserverErrDiv.setAttribute("style", "display: none");
+        }
+      }
+    });
+  }, []);
   return (
     <>
       <Grid>
@@ -73,12 +96,13 @@ const ServiceTable = ({ rowData, setSelectedRow, setIsServiceTable }: any) => {
           <Item
             style={{
               boxShadow: " 0px 0px 0px",
+              width: "100%",
             }}
           >
             <div
               style={{
                 height: "500px",
-                maxWidth: "inherit",
+                // maxWidth: "1110px",
               }}
               className="ag-theme-alpine"
             >
